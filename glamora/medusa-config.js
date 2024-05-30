@@ -67,6 +67,9 @@ const modules = {
       redisUrl: REDIS_URL
     }
   },*/
+  // blogService: {
+  //   resolve: "./modules/medusa-blog-ecommerce/index.ts",
+  // }
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */

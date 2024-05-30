@@ -19,7 +19,7 @@
     "allowJs": true,
     "skipLibCheck": true,
   },
-  "include": ["src"],
+  "include": ["src", "modules/"],
   "exclude": [
     "dist",
     "./src/**/__tests__",

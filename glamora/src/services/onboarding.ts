@@ -27,7 +27,7 @@ class OnboardingService extends TransactionBaseService {
       where: { id: Not(IsNull()) },
     });
 
-    return status;
+    return status ?? undefined;
   }
 
   async update(data: UpdateOnboardingStateInput): Promise<OnboardingState> {
@@ -37,7 +37,7 @@ class OnboardingService extends TransactionBaseService {
           this.onboardingRepository_
         );
 
-        const status = await this.retrieve();
+        const status = await this.retrieve() ?? new OnboardingState();
 
         for (const [key, value] of Object.entries(data)) {
           status[key] = value;
