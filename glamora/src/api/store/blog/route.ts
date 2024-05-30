@@ -33,7 +33,7 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
   }
 
   try {
-    const { title, content, handle, metadata = [], active } = bodyParams;
+    const { title, content, handle, metadata, active } = bodyParams;
     await blogService.insert({
       title,
       content,

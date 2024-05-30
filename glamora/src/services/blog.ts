@@ -5,7 +5,7 @@ import { EntityManager } from "typeorm";
 export default class BlogService extends TransactionBaseService {
   static LIFE_TIME = Lifetime.SCOPED;
   protected manager_: EntityManager;
-  constructor(container: any, options: any) {
+  constructor(container: any) {
     super(container);
     this.manager_ = container.manager;
   }
@@ -49,12 +49,13 @@ export default class BlogService extends TransactionBaseService {
 
         if (data.metadata) {
           for (const meta of data.metadata) {
-            this.manager_
-              .createQueryBuilder()
-              .insert()
-              .into("post_meta")
-              .values({ post_id: id, value: meta.key, content: meta.value })
-              .execute();
+            if (meta.key && meta.value)
+              this.manager_
+                .createQueryBuilder()
+                .insert()
+                .into("post_meta")
+                .values({ post_id: id, value: meta.key, content: meta.value })
+                .execute();
           }
         }
       }
@@ -82,13 +83,49 @@ export default class BlogService extends TransactionBaseService {
     image?: string;
     handle: string;
     active?: boolean;
-    metadata?: Object[];
+    metadata?: any[];
   }): Promise<any> {
-    return await this.manager_
+    let handleCounts: number = 0;
+
+    const res = await this.manager_
+      .createQueryBuilder()
+      .select("COUNT(*)", "count")
+      .from("posts", "posts")
+      .where("posts.handle LIKE :handle", { handle: data.handle + "%" })
+      .getRawOne();
+
+    handleCounts = parseInt(res.count);
+
+    const insertResult = await this.manager_
       .createQueryBuilder()
       .insert()
       .into("posts")
-      .values({ title: data.title, handle: data.handle, content: data.content, pub_date: new Date(), active: data.active ?? true })
+      .values({
+        title: data.title,
+        handle:
+          data.handle +
+          (handleCounts > 0
+            ? (data.handle.endsWith("-") ? "" : "-") + handleCounts
+            : ""),
+        content: data.content,
+        pub_date: new Date(),
+        active: data.active ?? true,
+      })
+      .returning("id")
       .execute();
+
+    const returnId = insertResult.raw[0].id;
+
+    if (data.metadata) {
+      for (const meta of data.metadata) {
+        this.manager_
+          .createQueryBuilder()
+          .insert()
+          .into("post_meta")
+          .values({ post_id: returnId, value: meta.key, content: meta.content })
+          .execute();
+      }
+    }
+    return insertResult;
   }
 }
