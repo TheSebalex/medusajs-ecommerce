@@ -10,77 +10,137 @@ export default class BlogService extends TransactionBaseService {
     this.manager_ = container.manager;
   }
 
-  async getAll(limit?: number, offset?: number): Promise<any> {
-    const results = await this.manager_
+  async getAll(
+    limit?: number | undefined,
+    offset?: number | undefined
+  ): Promise<any> {
+    let results = await this.manager_
       .createQueryBuilder()
       .select("*")
       .from("posts", "posts")
-      .limit(limit ?? 0)
-      .offset(offset ?? 0)
+      .orderBy("pub_date", "DESC")
+      .limit(limit)
+      .offset((offset ?? 0) * (limit ?? 10))
       .getRawMany();
+
+    results = await Promise.all(
+      results.map(async (post: any) => {
+        return {
+          ...post,
+          metadata: await this.manager_
+            .createQueryBuilder()
+            .select("value as key, content")
+            .from("post_meta", "metadata")
+            .where("post_id = :id", { id: post.id })
+            .getRawMany(),
+        };
+      })
+    );
+
+    let { count } : any = await this.manager_
+      .createQueryBuilder()
+      .select("count(*) as count")
+      .from("posts", "posts")
+      .getRawOne();
+
+    const pages = Math.ceil((count ?? 1) / (limit ?? 10)) ?? 1;
+
+    return { results, pages };
   }
 
-  getOne(id: number) {}
+  async getOne(searchValue: number) {
+    const postResult: any = await this.manager_
+      .createQueryBuilder()
+      .select("*")
+      .from("posts", "posts")
+      .where("id = :searchValue", { searchValue })
+      .limit(1)
+      .getRawOne();
+
+    if (postResult) {
+      postResult.error = null;
+      const metadata: any[] | undefined = await this.manager_
+        .createQueryBuilder()
+        .select("value as key, content")
+        .from("post_meta", "post_meta")
+        .where("post_id = :id", { id: postResult.id })
+        .getRawMany();
+
+      postResult.metadata = metadata ?? [];
+
+      return postResult;
+    } else {
+      return {
+        error: "Not found",
+      };
+    }
+  }
 
   async patch(
     id: number,
-    data: {
-      title: string;
-      content: string;
-      image?: string;
-      metadata?: { key: string; value: string }[];
-    }
+    data: any,
+    metadata: any[] | undefined
   ): Promise<any> {
     await this.manager_.transaction(
       async (transactionManager: EntityManager) => {
-        const result = await this.manager_
+        const updateResults = await transactionManager
           .createQueryBuilder()
           .update("posts")
+          .set(data)
           .where({ id })
-          .set({ title: data.title, content: data.content, image: data.image })
           .execute();
 
-        this.manager_
+        if(updateResults.affected === 0) throw new Error("Post not found");
+
+        await transactionManager
+          .createQueryBuilder()
+          .delete()
+          .from("post_meta")
+          .where("post_id = :id", { id })
+          .execute();
+
+        if (metadata) {
+          const metarows: any[] = metadata.map((metaRow) => {
+            return {
+              post_id: id,
+              ...metaRow,
+            };
+          });
+
+          await transactionManager
+            .createQueryBuilder()
+            .insert()
+            .into("post_meta")
+            .values(metarows)
+            .execute();
+        }
+      }
+    );
+  }
+
+  async delete(id: number) {
+    await this.manager_.transaction(
+      async (transactionManager: EntityManager) => {
+        await transactionManager
           .createQueryBuilder()
           .delete()
           .from("post_meta")
           .where({ post_id: id })
           .execute();
 
-        if (data.metadata) {
-          for (const meta of data.metadata) {
-            if (meta.key && meta.value)
-              this.manager_
-                .createQueryBuilder()
-                .insert()
-                .into("post_meta")
-                .values({ post_id: id, value: meta.key, content: meta.value })
-                .execute();
-          }
-        }
+        await transactionManager
+          .createQueryBuilder()
+          .delete()
+          .from("posts")
+          .where({ id })
+          .execute();
       }
     );
-  }
-
-  delete(id: string) {
-    this.manager_
-      .createQueryBuilder()
-      .delete()
-      .from("post_meta")
-      .where({ post_id: id })
-      .execute();
-    this.manager_
-      .createQueryBuilder()
-      .delete()
-      .from("posts")
-      .where({ id })
-      .execute();
   }
 
   async insert(data: {
     title: string;
     content: string;
-    image?: string;
     handle: string;
     active?: boolean;
     metadata?: any[];
@@ -118,12 +178,17 @@ export default class BlogService extends TransactionBaseService {
 
     if (data.metadata) {
       for (const meta of data.metadata) {
-        this.manager_
-          .createQueryBuilder()
-          .insert()
-          .into("post_meta")
-          .values({ post_id: returnId, value: meta.key, content: meta.content })
-          .execute();
+        if (meta.key && meta.content)
+          this.manager_
+            .createQueryBuilder()
+            .insert()
+            .into("post_meta")
+            .values({
+              post_id: returnId,
+              value: meta.key,
+              content: meta.content,
+            })
+            .execute();
       }
     }
     return insertResult;

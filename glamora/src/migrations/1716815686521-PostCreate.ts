@@ -6,7 +6,7 @@ export class PostCreate1716815686521 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE posts (
             id SERIAL,
             title VARCHAR(255) NOT NULL,
-            content VARCHAR(255) NOT NULL,
+            content VARCHAR(2000) NOT NULL,
             handle VARCHAR(255) NOT NULL,
             pub_date TIMESTAMP NOT NULL,
             active BOOLEAN NOT NULL,
@@ -18,10 +18,11 @@ export class PostCreate1716815686521 implements MigrationInterface {
             id SERIAL,
             post_id INT NOT NULL,
             value VARCHAR(255) NOT NULL,
-            content VARCHAR(255) NOT NULL,
+            content VARCHAR(2000) NOT NULL,
             CONSTRAINT fk_post
                 FOREIGN KEY (post_id) 
                 REFERENCES posts (id)
+                ON DELETE CASCADE
         );`);
     }
 

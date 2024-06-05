@@ -14,6 +14,7 @@ const SideMenuItems = {
   Search: "/search",
   Account: "/account",
   Cart: "/cart",
+  Blog: "/blog"
 }
 
 const SideMenu = ({ regions }: { regions: Region[] | null }) => {
