@@ -4,6 +4,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Container } from "@medusajs/ui"
+import { format } from "date-fns"
 
 export default function ListBlogItem({
   title,
@@ -18,21 +19,23 @@ export default function ListBlogItem({
   image?: string
   pub_date?: string
 }) {
+  const sliceValue = (image ? 100 : 350)
+
   const getDescriptionText = (html: string) => {
     const div = document.createElement("div")
     div.insertAdjacentHTML("afterbegin", html)
     let text = ""
-    div.innerText.split(" ").forEach((t) => {
-      if (text.length < 100) {
+    div.innerText.split(/\s+/g).forEach((t) => {
+      if (text.length < sliceValue) {
         text = `${text} ${t}`
       }
     })
-    return text + (div.innerText.length > 100 ? "..." : "")
+    return text.trim() + (div.innerText.length > sliceValue ? "..." : "")
   }
 
   return (
     <>
-      <Container className="w-full relative">
+      <Container className="w-full flex flex-col relative m-auto h-full">
         {image && (
           <Link href={`/blog/${handle}`}>
             <div className="min-h-[200px]">
@@ -44,12 +47,12 @@ export default function ListBlogItem({
             </div>
           </Link>
         )}
-        <div className="flex flex-col gap-y-4">
+        <div className="flex flex-col gap-y-4 flex-grow">
           <Link href={`/blog/${handle}`}>
-            <h3 className="font-medium text-lg">{title}</h3>
+            <h3 className="font-medium text-lg capitalize">{title}</h3>
           </Link>
           <p className="text-md">{getDescriptionText(content)}</p>
-          <div className="flex justify-between items-end pt-4">
+          <div className="flex justify-between pt-4 items-end mt-auto mb-0">
             <Link
               className="px-3 rounded-lg text-xs bg-gradient-to-tr shadow from-[#a296c0] to-[#e4deff] text-white py-2 hover:brightness-90 transition-all"
               href={`/blog/${handle}`}
@@ -57,7 +60,7 @@ export default function ListBlogItem({
               Read more
             </Link>
             <p className="text-xs text-gray-500">
-              {new Date(pub_date ?? "").toDateString()}
+              {format(new Date(pub_date ?? new Date()), "MMMM dd, yyyy")}
             </p>
           </div>
         </div>

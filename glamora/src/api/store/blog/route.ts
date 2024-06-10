@@ -15,6 +15,6 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     ? parsedPage
     : 1
 
-  const results = await blogService.getAll(parsedLimit, parsedPage - 1);
+  const results = await blogService.getAll(parsedLimit, parsedPage - 1, true);
   res.json(results);
 }

@@ -50,11 +50,11 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const blogService = req.scope.resolve<BlogService>("blogService");
   // Proporcionar valores por defecto y asegurarse de que son strings
-  let { limit = "10", offset = "0" }: any = req.query;
+  let { limit, offset}: any = req.query;
 
   let { parsedLimit, parsedOffset } = {
-    parsedLimit: parseInt(limit),
-    parsedOffset: parseInt(offset),
+    parsedLimit: limit ? parseInt(limit) : undefined,
+    parsedOffset: offset ? parseInt(offset) : 0,
   };
 
   const results = await blogService.getAll(parsedLimit, parsedOffset);

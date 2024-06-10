@@ -1,12 +1,14 @@
 import { Product } from "@medusajs/medusa"
 import { Metadata } from "next"
-
 import { getCollectionsList, getProductsList, getRegion, getCategoriesList } from "@lib/data"
-import FeaturedProducts from "@modules/home/components/featured-products"
-import Hero from "@modules/home/components/hero"
 import { ProductCollectionWithPreviews } from "types/global"
 import { cache } from "react"
+import FeaturedProducts from "@modules/home/components/featured-products"
 import FeaturedCategories from "@modules/home/components/featured-categories"
+import FeaturedArticles from "@modules/home/components/featured-articles/featured-articles"
+import Hero from "@modules/home/components/hero"
+import getBlogPosts from "@lib/util/get-blog"
+import { Article } from "@lib/util/get-post"
 
 export const metadata: Metadata = {
   title: "Glamora Store",
@@ -64,7 +66,7 @@ export default async function Home({
   const { product_categories } = await getCategoriesList()
   const region = await getRegion(countryCode)
 
-  console.log(product_categories)
+  const { results: articles } : { results: Article[] } = await getBlogPosts(0, 5);
 
   if (!collections || !region) {
     return null
@@ -78,7 +80,10 @@ export default async function Home({
           <FeaturedProducts collections={collections} region={region} />
         </ul>
       </div>
-      <div className="max-w-[1200px] mx-auto mb/16">
+      <div className="max-w-[1200px] mx-auto mb-12">
+      <FeaturedArticles articles={articles} />
+      </div>
+      <div className="max-w-[1200px] mx-auto mb-16">
         <FeaturedCategories categories={product_categories} />
       </div>
     </>

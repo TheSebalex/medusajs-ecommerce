@@ -29,14 +29,14 @@ export function CollectionsButton({
   return (
     <>
       <button
-        className={`text-white bg-gradient-to-r h-full relative px-4 from-[#4f4064] to-[#a296c0] transition-all ${
-          !showCategories && "hover:brightness-125"
+        className={`text-white bg-gradient-to-r h-[65%] rounded relative px-3 outline-none from-[#c1a9df] to-[#ac9ece] transition-all ${
+          !showCategories && "hover:brightness-105 hover:shadow-[0_0_10px_3px_#ffffff4d]"
         }`}
         onClick={handleClick}
       >
         Collections
         <ul
-          className={`absolute hidden top-[105%] right-0 min-w-[100%] w-max md:grid max-w-[100vw] transition-all overflow-hidden md:rounded-lg [&_a]:px-4 hover:[&_a]:text-white text-black bg-[#e4deff] [&_a]:py-2 hover:[&_a]:bg-[#c1a9df] [&_a]:gap-2 [&_a]:flex [&_a]:transition-all  ${
+          className={`absolute hidden top-[135%] right-0 min-w-[100%] w-max md:grid max-w-[100vw] transition-all overflow-hidden md:rounded-lg [&_a]:px-4 hover:[&_a]:text-white text-black bg-[#e4deff] [&_a]:py-2 hover:[&_a]:bg-[#c1a9df] [&_a]:gap-2 [&_a]:flex [&_a]:transition-all  ${
             showCategories ? "show-categories" : "hide-categories"
           }`}
         >

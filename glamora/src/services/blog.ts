@@ -1,6 +1,7 @@
-import { TransactionBaseService, wrapHandler } from "@medusajs/medusa";
+import { TransactionBaseService } from "@medusajs/medusa";
 import { Lifetime } from "awilix";
 import { EntityManager } from "typeorm";
+import { generateEntityId } from "@medusajs/medusa/dist/utils";
 
 export default class BlogService extends TransactionBaseService {
   static LIFE_TIME = Lifetime.SCOPED;
@@ -10,9 +11,89 @@ export default class BlogService extends TransactionBaseService {
     this.manager_ = container.manager;
   }
 
+  async getOneByHandle(
+    searchValue: string,
+    onlyActive?: boolean
+  ): Promise<any> {
+    const postResult: any = await this.manager_
+      .createQueryBuilder()
+      .select("*")
+      .from("posts", "posts")
+      .where(
+        onlyActive
+          ? "handle = :searchValue AND active = true"
+          : "handle = :searchValue",
+        { searchValue }
+      )
+      .limit(1)
+      .getRawOne();
+
+    if (postResult) {
+      postResult.error = null;
+      const metadata: any[] | undefined = await this.manager_
+        .createQueryBuilder()
+        .select("value as key, content")
+        .from("post_meta", "post_meta")
+        .where("post_id = :id", { id: postResult.id })
+        .getRawMany();
+
+      postResult.metadata = metadata ?? [];
+
+      return postResult;
+    } else {
+      return {
+        error: "Not found",
+      };
+    }
+  }
+
+  async getImages(): Promise<any> {
+    const images: any[] = await this.manager_
+      .createQueryBuilder()
+      .select("*")
+      .from("image", "image")
+      .getRawMany()
+      .then((data) => data || [])
+      .then((data) =>
+        data.map((data) => ({ ...data, metadata: JSON.parse(data.metadata) }))
+      );
+    return images;
+  }
+
+  async deleteImage(id: string) {
+    try {
+      await this.manager_
+        .createQueryBuilder()
+        .delete()
+        .from("image")
+        .where("id = :id", { id })
+        .execute();
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  async saveImage(name: string, url: string, key?: string): Promise<any> {
+    await this.manager_
+      .createQueryBuilder()
+      .insert()
+      .into("image")
+      .values({
+        id: generateEntityId(null, "img"),
+        url,
+        created_at: new Date(),
+        uploaded_at: new Date(),
+        metadata: JSON.stringify({ name, key: key ?? "" }),
+      })
+      .execute();
+  }
+
   async getAll(
     limit?: number | undefined,
-    offset?: number | undefined
+    offset?: number | undefined,
+    onlyActive?: boolean | undefined
   ): Promise<any> {
     let results = await this.manager_
       .createQueryBuilder()
@@ -20,6 +101,9 @@ export default class BlogService extends TransactionBaseService {
       .from("posts", "posts")
       .orderBy("pub_date", "DESC")
       .limit(limit)
+      .where(onlyActive ? "active = :active" : "true = true", {
+        active: onlyActive ?? true,
+      })
       .offset((offset ?? 0) * (limit ?? 10))
       .getRawMany();
 
@@ -37,23 +121,28 @@ export default class BlogService extends TransactionBaseService {
       })
     );
 
-    let { count } : any = await this.manager_
+    let { count }: any = await this.manager_
       .createQueryBuilder()
       .select("count(*) as count")
       .from("posts", "posts")
       .getRawOne();
 
-    const pages = Math.ceil((count ?? 1) / (limit ?? 10)) ?? 1;
+    const pages = Math.ceil((count ?? 1) / (limit ?? count ?? 1)) ?? 1;
 
     return { results, pages };
   }
 
-  async getOne(searchValue: number) {
+  async getOne(searchValue: number, onlyActive?: boolean): Promise<any> {
     const postResult: any = await this.manager_
       .createQueryBuilder()
       .select("*")
       .from("posts", "posts")
-      .where("id = :searchValue", { searchValue })
+      .where(
+        onlyActive
+          ? "id = :searchValue AND active = true"
+          : "id = :searchValue",
+        { searchValue }
+      )
       .limit(1)
       .getRawOne();
 
@@ -90,7 +179,7 @@ export default class BlogService extends TransactionBaseService {
           .where({ id })
           .execute();
 
-        if(updateResults.affected === 0) throw new Error("Post not found");
+        if (updateResults.affected === 0) throw new Error("Post not found");
 
         await transactionManager
           .createQueryBuilder()

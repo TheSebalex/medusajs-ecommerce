@@ -9,19 +9,17 @@ export const metadata: Metadata = {
 }
 
 export default async function BlogList({ searchParams }: any) {
-  // const page : number = parseInt(useSearchParams().get("page") ?? "0") ?? 0;
+
   const posts: { results: any[]; pages: number } = await getBlogPosts(
     searchParams?.page,
     searchParams?.limit
   )
 
-  console.log(posts)
-
   return (
     <>
       <div className="flex flex-col gap-x-6 max-w-[1200px] mx-auto p-5 lg:p-12">
         <h1 className="font-normal font-sans txt-xlarge">Blog</h1>
-        <ul className="flex flex-col gap-8 mt-5">
+        <ul className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-5">
           {posts.results.map((post) => (
             <ListBlogItem
               key={post.handle}

@@ -6,7 +6,7 @@ export class PostCreate1716815686521 implements MigrationInterface {
         await queryRunner.query(`CREATE TABLE posts (
             id SERIAL,
             title VARCHAR(255) NOT NULL,
-            content VARCHAR(2000) NOT NULL,
+            content TEXT NOT NULL,
             handle VARCHAR(255) NOT NULL,
             pub_date TIMESTAMP NOT NULL,
             active BOOLEAN NOT NULL,
