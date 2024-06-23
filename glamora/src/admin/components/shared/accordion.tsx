@@ -4,34 +4,13 @@ import { CheckCircleSolid, CircleMiniSolid } from "@medusajs/icons";
 import { Heading, Text, clx } from "@medusajs/ui";
 import ActiveCircleDottedLine from "./icons/active-circle-dotted-line";
 
-type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
-  title: string;
-  subtitle?: string;
-  description?: string;
-  required?: boolean;
-  tooltip?: string;
-  forceMountContent?: true;
-  headingSize?: "small" | "medium" | "large";
-  customTrigger?: React.ReactNode;
-  complete?: boolean;
-  active?: boolean;
-  triggerable?: boolean;
-};
-
-const Accordion: (React.FC<
-  | (AccordionPrimitive.AccordionSingleProps &
-      React.RefAttributes<HTMLDivElement>)
-  | (AccordionPrimitive.AccordionMultipleProps &
-      React.RefAttributes<HTMLDivElement>)
-> & {
-  Item: React.FC<AccordionItemProps>;
-}) | any = ({ children, ...props } : any) => {
+const Accordion: any = ({ children, ...props }: any) => {
   return (
     <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
   );
 };
 
-const Item: React.FC<AccordionItemProps> = ({
+const Item: any = ({
   title,
   subtitle,
   description,
@@ -46,10 +25,11 @@ const Item: React.FC<AccordionItemProps> = ({
   active,
   triggerable,
   ...props
-}) | any => {
+}): any => {
   return (
     <AccordionPrimitive.Item
       {...props}
+      value={title}
       className={clx(
         "border-grey-20 group border-t last:mb-0",
         "py-1 px-8",
