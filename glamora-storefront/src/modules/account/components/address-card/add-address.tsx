@@ -126,7 +126,7 @@ const AddAddress = ({ region }: { region: Region }) => {
             </div>
             {formState.error && (
               <div className="text-rose-500 text-small-regular py-2" data-testid="address-error">
-                {formState.error}
+                {formState.error ?? "Something went wrong"}
               </div>
             )}
           </Modal.Body>

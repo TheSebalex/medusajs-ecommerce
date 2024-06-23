@@ -165,7 +165,7 @@ export async function updateCustomerPassword(
 }
 
 export async function addCustomerShippingAddress(
-  _currentState: Record<string, unknown>,
+  _currentState: Record<string, any>,
   formData: FormData
 ) {
   const customer = {
