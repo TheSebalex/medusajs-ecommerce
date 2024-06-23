@@ -58,7 +58,7 @@ export async function logCustomerIn(
 }
 
 export async function updateCustomerName(
-  _currentState: Record<string, unknown>,
+  _currentState: Record<string, any>,
   formData: FormData
 ) {
   const customer = {
@@ -95,7 +95,7 @@ export async function updateCustomerEmail(
 }
 
 export async function updateCustomerPhone(
-  _currentState: Record<string, unknown>,
+  _currentState: Record<string, any>,
   formData: FormData
 ) {
   const customer = {
