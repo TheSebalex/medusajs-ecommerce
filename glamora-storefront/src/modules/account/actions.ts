@@ -77,7 +77,7 @@ export async function updateCustomerName(
 }
 
 export async function updateCustomerEmail(
-  _currentState: Record<string, unknown>,
+  _currentState: Record<string, any>,
   formData: FormData
 ) {
   const customer = {
