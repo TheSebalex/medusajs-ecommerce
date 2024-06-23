@@ -132,7 +132,7 @@
 .hero-background {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: top 0 right 35%;
+  background-position: center;
 }
 
 .swiper-pagination-bullet-active {

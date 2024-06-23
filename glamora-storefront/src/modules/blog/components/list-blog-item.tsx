@@ -19,7 +19,7 @@ export default function ListBlogItem({
   image?: string
   pub_date?: string
 }) {
-  const sliceValue = (image ? 100 : 350)
+  const sliceValue = image ? 100 : 350
 
   const getDescriptionText = (html: string) => {
     const div = document.createElement("div")
@@ -39,11 +39,13 @@ export default function ListBlogItem({
         {image && (
           <Link href={`/blog/${handle}`}>
             <div className="min-h-[200px]">
-              <img
-                src={image}
-                alt={`${title} thumbnail`}
-                className="absolute rounded-t-lg top-0 left-0 bottom-0 right-0 object-cover w-full h-[200px]"
-              />
+              <div className="absolute rounded-t-lg top-0 left-0 bottom-0 right-0 object-cover w-full h-[200px]">
+                <Image
+                  src={image}
+                  alt={`${title} thumbnail`}
+                  className="absolute rounded-t-lg top-0 left-0 bottom-0 right-0 object-cover w-full h-[200px]"
+                />
+              </div>
             </div>
           </Link>
         )}
@@ -54,7 +56,7 @@ export default function ListBlogItem({
           <p className="text-md">{getDescriptionText(content)}</p>
           <div className="flex justify-between pt-4 items-end mt-auto mb-0">
             <Link
-              className="px-3 rounded-lg text-xs bg-gradient-to-tr shadow from-[#a296c0] to-[#e4deff] text-white py-2 hover:brightness-90 transition-all"
+              className="px-3 rounded-lg text-xs bg-gradient-to-tr shadow from-[#339989] to-[#7de2d1] text-white py-2 hover:brightness-90 transition-all"
               href={`/blog/${handle}`}
             >
               Read more

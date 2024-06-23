@@ -27,7 +27,7 @@ export default async function BlogList({ searchParams }: any) {
               content={post.content}
               handle={post.handle}
               image={
-                post.metadata?.find((m: any) => m.key === "image")?.content
+                post.metadata?.find((m: any) => m.key === "images" || m.key === "og:image" || m.key === "image")?.content || post.metadata?.find((m: any) => m.key === "og:images")?.content
               }
               pub_date={post.pub_date}
             />

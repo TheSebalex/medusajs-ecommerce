@@ -11,7 +11,7 @@ import getBlogPosts from "@lib/util/get-blog"
 import { Article } from "@lib/util/get-post"
 
 export const metadata: Metadata = {
-  title: "Glamora Store",
+  title: "Home Wizardry Store",
   description:
     "A performant frontend ecommerce starter template with Next.js 14 and Medusa.",
 }

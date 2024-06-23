@@ -20,7 +20,7 @@ export default function FeaturedCategories({
 }: {
   categories: any[]
 }) {
-  const colorBackground: string[] = ["#e4deff", "#d8d5ce", "#a296c0", "#f8d2f2"]
+  const colorBackground: string[] = ["#2b2c28", "#339989", "#7de2d1", "#fffafb"]
   const [displayIndex, setDisplayIndex] = useState(0)
   const [displayIndexAnimate, setDisplayIndexAnimate] = useState(0)
 
@@ -75,7 +75,7 @@ export default function FeaturedCategories({
                         {category.name}
                       </Text>
                       <LocalizedClientLink
-                        className="m-auto bg-[#2d3142] cursor-pointer [&_.shop-hover]:hover:rotate-45 [&_.shop-hover]:hover:brightness-0 flex gap-1 hover:text-black transition-all hover:bg-white w-fit text-white shadow-lg px-4 rounded py-2"
+                        className="m-auto bg-[#131515] cursor-pointer [&_.shop-hover]:hover:rotate-45 [&_.shop-hover]:hover:brightness-0 flex gap-1 hover:text-black transition-all hover:bg-white w-fit text-white shadow-lg px-4 rounded py-2"
                         href={`/categories/${category.handle}`}
                       >
                         Visit!

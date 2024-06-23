@@ -34,7 +34,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   }
 }
 
@@ -92,7 +92,7 @@ export default async function ArticlePage({ params }: Props) {
     notFound()
   }
 
-  const image = post.metadata?.find((m: any) => m.key === "image")?.content
+  const image = post.metadata?.find((m: any) => m.key === "images" || m.key === "og:image" || m.key === "image")?.content || post.metadata?.find((m: any) => m.key === "og:images")?.content
 
   const hidePrincipalImage = Boolean(
     post.metadata?.find((meta) => meta.key == "image:not-show")?.content ??
@@ -123,10 +123,10 @@ export default async function ArticlePage({ params }: Props) {
         <span className="mb-5 txt-medium-plus text-ui-fg-muted">
           {format(post?.pub_date ?? new Date(), "MMMM dd, yyyy")}
         </span>
-        <div
-          className="max-w-[100%] overflow-clip"
+        <article
+          className="max-w-[100%] overflow-clip prose"
           dangerouslySetInnerHTML={{ __html: post.content }}
-        ></div>
+        ></article>
       </div>
     </>
   )

@@ -55,7 +55,7 @@ const EditBlogArticle = () => {
       active: isChecked,
     });
     if (status.ok) {
-      toast.success("Article created successfully", {
+      toast.success("Article updated successfully", {
         duration: 3000,
       });
       setTimeout(() => {
@@ -111,9 +111,10 @@ const EditBlogArticle = () => {
           </Button>
         </div>
         <div
-          className={`${
-            error404 ? "hidden" : ""
-          } [&_div.tox-promotion]:hidden [&_.tox-statusbar\_\_branding]:hidden`}
+          className={
+            "[&_div.tox-promotion]:hidden [&_.tox-statusbar__branding]:hidden " +
+            (error404 ? "hidden" : "")
+          }
         >
           <div className="px-1 mb-5 flex gap-5 [&>*:nth-child(1)]:w-1/3 [&>*:nth-child(1)]:flex-grow">
             <Input ref={titleRef} placeholder="Title" />

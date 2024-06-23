@@ -19,6 +19,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import getImages from "../../../utils/get-images";
 import saveImage from "../../../utils/save-image";
 import { useState, useEffect } from "react";
+import blogEditorCss from "../../../utils/blog-editor-css";
 
 const BlogEditor = ({ initialValue, contentRef }: { initialValue?: string, contentRef: any }) => {
   const [images, setImages] = useState(null);
@@ -54,7 +55,10 @@ const BlogEditor = ({ initialValue, contentRef }: { initialValue?: string, conte
       body { 
         font-family: Poppins; cursor: text;
     
-      };`,
+      };
+      
+      ${blogEditorCss}
+      `,
           async images_upload_handler(blobInfo, progress) {
             progress(50);
             const { url } = await saveImage({
@@ -67,6 +71,7 @@ const BlogEditor = ({ initialValue, contentRef }: { initialValue?: string, conte
             return url;
           },
           image_list: images,
+          body_class: "prose",
           link_default_protocol: "https",
           default_link_target: "_blank",
         }}
