@@ -18,14 +18,14 @@ type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
   triggerable?: boolean;
 };
 
-const Accordion: React.FC<
+const Accordion: (React.FC<
   | (AccordionPrimitive.AccordionSingleProps &
       React.RefAttributes<HTMLDivElement>)
   | (AccordionPrimitive.AccordionMultipleProps &
       React.RefAttributes<HTMLDivElement>)
 > & {
   Item: React.FC<AccordionItemProps>;
-} | any = ({ children, ...props }) => {
+}) | any = ({ children, ...props } : any) => {
   return (
     <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
   );
