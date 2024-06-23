@@ -2,11 +2,7 @@ import { Text, clx } from "@medusajs/ui";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import React from "react";
 
-const Accordion = ({ children, ...props } : any) => {
-  return (
-      <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
-  );
-};
+const Accordion : any = {...AccordionPrimitive.Root}
 
 const Item = ({
   title,
