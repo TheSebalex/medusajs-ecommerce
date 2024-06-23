@@ -121,7 +121,7 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         )}
         <span className="mb-5 txt-medium-plus text-ui-fg-muted">
-          {format(post?.pub_date ?? new Date(), "MMMM dd, yyyy")}
+          {format(new Date(post?.pub_date) ?? new Date(), "MMMM dd, yyyy")}
         </span>
         <article
           className="max-w-[100%] overflow-clip prose"
