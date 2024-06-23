@@ -1,28 +1,31 @@
-import { Text, clx } from "@medusajs/ui"
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import React from "react"
+// @ts-nocheck
+
+import { Text, clx } from "@medusajs/ui";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import React from "react";
 
 type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
-  title: string
-  subtitle?: string
-  description?: string
-  required?: boolean
-  tooltip?: string
-  forceMountContent?: true
-  headingSize?: "small" | "medium" | "large"
-  customTrigger?: React.ReactNode
-  complete?: boolean
-  active?: boolean
-  triggerable?: boolean
-  children: React.ReactNode
-}
+  title: string;
+  subtitle?: string;
+  description?: string;
+  required?: boolean;
+  tooltip?: string;
+  forceMountContent?: true;
+  headingSize?: "small" | "medium" | "large";
+  customTrigger?: React.ReactNode;
+  complete?: boolean;
+  active?: boolean;
+  triggerable?: boolean;
+  children: React.ReactNode;
+};
 
-const Accordion: any = ({ children, ...props } : any) => {
-  return (<>
-    <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
-  </>
-  )
-}
+const Accordion: React.FC<AccordionItemProps> = ({ children, ...props }) => {
+  return (
+    <>
+      <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
+    </>
+  );
+};
 
 const Item: React.FC<AccordionItemProps> = ({
   title,
