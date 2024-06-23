@@ -2,7 +2,11 @@ import { Text, clx } from "@medusajs/ui";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import React from "react";
 
-const Accordion = (()=> AccordionPrimitive)()
+const Accordion : any = ({ children, ...props }: any) => {
+  return (
+    <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
+  );
+}
 
 const Item = ({
   title,
@@ -15,7 +19,7 @@ const Item = ({
   forceMountContent = undefined,
   triggerable,
   ...props
-}) => {
+} : any) => {
   return (<>
     <AccordionPrimitive.Item
       {...props}

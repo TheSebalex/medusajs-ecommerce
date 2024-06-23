@@ -31,7 +31,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "src/modules/products/components/product-tabs/accordion.jsx"  ],
+, "src/modules/products/components/product-tabs/accordion.tsx"  ],
   "exclude": [
     "node_modules",
     ".next",
