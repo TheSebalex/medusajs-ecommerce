@@ -74,13 +74,13 @@ import { ProgressAccordion } from "@medusajs/ui";
 //   Content: AccordionPrimitive.Content,
 // }
 
-const Accordion = ({ children }: { children: React.ReactNode }) => {
+const Accordion = ({ children }) => {
   return <ProgressAccordion  type="multiple">
     {children}
   </ProgressAccordion>
 }
 
-const AccordionItem = ({ title, children }: { title: string, children: React.ReactNode }) => {
+const AccordionItem = ({ title, children }) => {
 return <ProgressAccordion.Item value={title}>
   <ProgressAccordion.Header className="[&_span]:hidden py-[.8rem] px-0">
   {title}
