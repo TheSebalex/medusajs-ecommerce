@@ -2,13 +2,6 @@ import { Text, clx } from "@medusajs/ui";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import React from "react";
 
-const Accordion : any = React.forwardRef<
-React.ElementRef<typeof AccordionPrimitive.Root>, React.PropsWithChildren<typeof AccordionPrimitive.Root>>(({ children, ...props } : any) => {
-  return (
-    <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
-  );
-})
-
 const Item = ({
   title,
   subtitle,
@@ -63,8 +56,6 @@ const Item = ({
   )
 }
 
-Accordion.Item = Item;
-
 const MorphingTrigger = () => {
   return (
     <div className="text-grey-90 hover:bg-grey-5 active:bg-grey-5 active:text-violet-60 focus:border-violet-60 disabled:text-grey-30 bg-transparent disabled:bg-transparent rounded-rounded group relative p-[6px]">
@@ -76,4 +67,9 @@ const MorphingTrigger = () => {
   )
 }
 
-export default Accordion
+export default {
+  Root: AccordionPrimitive.Root,
+  Item,
+  Trigger: AccordionPrimitive.Trigger,
+  Content: AccordionPrimitive.Content,
+}
