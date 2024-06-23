@@ -15,28 +15,28 @@ type Props = {
   }
 }
 
-export async function getStaticPaths() {
-  const handles: string[] = await getBlog().then((articles) =>
-    articles.results.map((article: Article) => article.handle)
-  )
+// export async function getStaticPaths() {
+//   const handles: string[] = await getBlog().then((articles) =>
+//     articles.results.map((article: Article) => article.handle)
+//   )
 
-  const regions: any[] = await listRegions().then((regions: any) =>
-    regions
-      .map((reg: any) => reg.countries.map((country: any) => country.iso_2))
-      .reduce((a: any, b: any) => [...a, ...b])
-  )
+//   const regions: any[] = await listRegions().then((regions: any) =>
+//     regions
+//       .map((reg: any) => reg.countries.map((country: any) => country.iso_2))
+//       .reduce((a: any, b: any) => [...a, ...b])
+//   )
 
-  const paths = regions
-    .map((region) =>
-      handles.map((handle) => ({ params: { handle, countryCode: region } }))
-    )
-    .flat()
+//   const paths = regions
+//     .map((region) =>
+//       handles.map((handle) => ({ params: { handle, countryCode: region } }))
+//     )
+//     .flat()
 
-  return {
-    paths,
-    fallback: false,
-  }
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   }
+// }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = params
