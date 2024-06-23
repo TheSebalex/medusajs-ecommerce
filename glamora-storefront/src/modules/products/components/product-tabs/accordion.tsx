@@ -17,17 +17,10 @@ type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
   children: React.ReactNode
 }
 
-type AccordionProps =
-  | (AccordionPrimitive.AccordionSingleProps &
-      React.RefAttributes<HTMLDivElement>)
-  | (AccordionPrimitive.AccordionMultipleProps &
-      React.RefAttributes<HTMLDivElement>)
-
-const Accordion: React.FC<AccordionProps> & {
-  Item: React.FC<AccordionItemProps>
-} = ({ children, ...props } : any) => {
-  return (
+const Accordion: any = ({ children, ...props } : any) => {
+  return (<>
     <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
+  </>
   )
 }
 
