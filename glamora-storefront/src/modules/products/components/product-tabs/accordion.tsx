@@ -4,9 +4,7 @@ import React from "react";
 
 const Accordion = ({ children, ...props } : any) => {
   return (
-    <>
       <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
-    </>
   );
 };
 
