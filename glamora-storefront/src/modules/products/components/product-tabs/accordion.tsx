@@ -4,9 +4,7 @@ import React from "react";
 
 const Accordion = ({ children, ...props } : any) => {
   return (
-    <div>
       <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
-    </div>
   );
 };
 
@@ -64,7 +62,7 @@ const Item = ({
   )
 }
 
-Accordion.Item = Item
+Accordion.Item = Item;
 
 const MorphingTrigger = () => {
   return (
