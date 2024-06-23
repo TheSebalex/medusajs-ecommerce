@@ -25,7 +25,7 @@ const Accordion: React.FC<
       React.RefAttributes<HTMLDivElement>)
 > & {
   Item: React.FC<AccordionItemProps>;
-} = ({ children, ...props }) => {
+} | any = ({ children, ...props }) => {
   return (
     <AccordionPrimitive.Root {...props}>{children}</AccordionPrimitive.Root>
   );
@@ -46,7 +46,7 @@ const Item: React.FC<AccordionItemProps> = ({
   active,
   triggerable,
   ...props
-}) => {
+}) | any => {
   return (
     <AccordionPrimitive.Item
       {...props}
