@@ -234,7 +234,7 @@ export async function deleteCustomerShippingAddress(addressId: string) {
 }
 
 export async function updateCustomerBillingAddress(
-  _currentState: Record<string, unknown>,
+  _currentState: Record<string, any>,
   formData: FormData
 ) {
   const customer = {
