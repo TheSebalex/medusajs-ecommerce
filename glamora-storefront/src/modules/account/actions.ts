@@ -194,7 +194,7 @@ export async function addCustomerShippingAddress(
 }
 
 export async function updateCustomerShippingAddress(
-  currentState: Record<string, unknown>,
+  currentState: Record<string, any>,
   formData: FormData
 ) {
   const addressId = currentState.addressId as string
