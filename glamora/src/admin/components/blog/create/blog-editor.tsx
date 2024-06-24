@@ -12,7 +12,6 @@ import "tinymce/models/dom";
 import "tinymce/plugins/link";
 import "tinymce/plugins/image";
 import "tinymce/plugins/table";
-import "tinymce/tinymce";
 
 import { Editor } from "@tinymce/tinymce-react";
 
