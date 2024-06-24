@@ -6,7 +6,7 @@ import { env } from "process";
 import { RouteConfig } from "@medusajs/admin";
 
 const BlogAdmin = () => {  
-
+  
   const backendApiUrl = (env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000").concat("/admin/blog")
 
   return (
