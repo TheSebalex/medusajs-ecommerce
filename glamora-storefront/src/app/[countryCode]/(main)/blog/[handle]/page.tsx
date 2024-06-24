@@ -23,7 +23,7 @@ export async function getStaticPaths() {
   const regions: any[] = await listRegions().then((regions: any) =>
     regions
       .map((reg: any) => reg.countries.map((country: any) => country.iso_2))
-      .reduce((a: any, b: any) => [...a, ...b])
+      .reduce((a: any, b: any) => [...a, ...b], [])
   )
 
   const paths = regions
