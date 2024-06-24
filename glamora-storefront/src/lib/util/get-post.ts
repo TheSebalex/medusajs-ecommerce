@@ -14,9 +14,9 @@ export interface Article {
 
 export default async function getArticle(handle: string | undefined) : Promise<Article> {
   const baseUrl: string = (
-    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000/"
+    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000"
   )
-    .concat("store/blog/")
+    .concat("/store/blog/")
     .concat(handle ?? "")
 
   const post: Article = await axios.get(baseUrl).then((response) => response.data)

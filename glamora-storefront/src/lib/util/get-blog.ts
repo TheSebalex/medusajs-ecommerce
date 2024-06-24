@@ -5,8 +5,8 @@ export default async function getBlogPosts(
   limit?: number | string
 ): Promise<any> {
   const baseUrl: string = (
-    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000/"
-  ).concat("store/blog")
+    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000"
+  ).concat("/store/blog")
 
   const params = new URLSearchParams()
 
