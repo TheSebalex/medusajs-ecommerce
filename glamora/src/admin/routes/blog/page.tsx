@@ -7,7 +7,7 @@ import { RouteConfig } from "@medusajs/admin";
 
 const BlogAdmin = () => {  
 
-  const backendApiUrl = (env.MEDUSA_BACKEND_URL || "http://localhost:9000").concat("/admin/blog")
+  const backendApiUrl = (env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000").concat("/admin/blog")
 
   return (
     <div className="pb-[70px]">

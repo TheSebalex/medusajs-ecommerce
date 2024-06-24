@@ -9,7 +9,7 @@ export default async function saveImage({
   name?: string;
 }) {
   const getUrl = (endpoint: string): string =>
-    (env.MEDUSA_BACKEND_URL || "http://localhost:9000").concat(endpoint);
+    (env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000").concat(endpoint);
 
   try {
     const formData = new FormData();
