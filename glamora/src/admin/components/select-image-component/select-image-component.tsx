@@ -81,10 +81,9 @@ export default function SelectImageComponent({
               Cancel
             </Button>
             <Button
-              disabled={Number.isInteger(selected) === false || !selected}
               onClick={() => {
                 setShow(false);
-                setTimeout(() => resolve(displayImages[selected]), 10);
+                if(selected ?? false) setTimeout(() => resolve(displayImages[selected]), 10);
               }}
             >
               Save
