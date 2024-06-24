@@ -6,7 +6,7 @@ export default async function updateArticle(
   { title, content, handle, metadata, active }
 ) {
   const getUrl = (endpoint: string): string =>
-    (env.MEDUSA_ADMIN_BACKEND_URL || "http://localhost:9000").concat(endpoint);
+    (env.MEDUSA_ADMIN_BACKEND_URL ?? "").concat(endpoint);
 
   try {
     await axios.patch(
