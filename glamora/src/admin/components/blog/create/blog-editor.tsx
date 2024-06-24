@@ -1,12 +1,12 @@
 // Principal TinyMCE script
-import "tinymce/tinymce";
+import "@tinymce/../tinymce/tinymce.min.js";
 
 // Theme
 import "tinymce/themes/silver";
 // Toolbar icons
 import "tinymce/icons/default";
 // Editor styles
-import "tinymce/skins/ui/oxide/skin.min.css";
+import "tinymce/skins/ui/tinymce-5/skin.min.css";
 import "tinymce/models/dom";
 
 import "tinymce/plugins/link";
