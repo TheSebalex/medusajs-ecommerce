@@ -14,7 +14,7 @@ export interface Article {
 
 export default async function getArticle(handle: string | undefined) : Promise<Article> {
   const baseUrl: string = (
-    env.NEXT_PUBLIC_BLOG_API_URL ?? "http://localhost:9000/"
+    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000/"
   )
     .concat("store/blog/")
     .concat(handle ?? "")

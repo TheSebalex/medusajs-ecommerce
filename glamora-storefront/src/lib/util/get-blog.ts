@@ -5,7 +5,7 @@ export default async function getBlogPosts(
   limit?: number | string
 ): Promise<any> {
   const baseUrl: string = (
-    env.NEXT_PUBLIC_BLOG_API_URL ?? "http://localhost:9000/"
+    env.MEDUSA_BACKEND_URL ?? "http://localhost:9000/"
   ).concat("store/blog")
 
   const params = new URLSearchParams()
