@@ -16,13 +16,6 @@ export default function SelectImageComponent({
   title: string;
 }) {
   const [displayImages, setDisplayImages] = useState(images);
-  const selectedRef = useRef(null);
-
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    selectedRef.current = selected;
-  }, [selected]);
 
   const [show, setShow] = useState(true);
   return (
@@ -57,10 +50,11 @@ export default function SelectImageComponent({
                   <div key={i} className="w-full relative">
                     <img
                       src={img.url}
-                      onClick={() => setSelected(i)}
-                      className={`${
-                        selectedRef.current === i ? "border-[green]" : "border-transparent"
-                      } cursor-pointer border-2 w-full aspect-square rounded-lg shadow object-cover`}
+                      onClick={() => {
+                        setShow(false);
+                        setTimeout(() => resolve(img), 10);
+                      }}
+                      className={`cursor-pointer border-2 w-full aspect-square rounded-lg shadow object-cover`}
                     />
                     <div
                       className="cursor-pointer absolute top-2 right-2"
@@ -86,15 +80,6 @@ export default function SelectImageComponent({
               variant="secondary"
             >
               Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                setShow(false);
-                if (selected ?? false)
-                  setTimeout(() => resolve(displayImages[selected]), 10);
-              }}
-            >
-              Save
             </Button>
           </Drawer.Footer>
         </Drawer.Content>
