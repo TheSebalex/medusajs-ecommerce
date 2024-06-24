@@ -50,6 +50,8 @@ export default function SelectImageComponent({
                   <div key={i} className="w-full relative">
                     <img
                       src={img.url}
+                      width={200}
+                      height={200}
                       onClick={() => {
                         setShow(false);
                         setTimeout(() => resolve(img), 10);
