@@ -31,6 +31,8 @@ export async function updateRegion(countryCode: string, currentPath: string) {
     return "Error updating region"
   }
 
+  console.log("Redirected")
+
   redirect(`/${countryCode}${currentPath}`)
 }
 
