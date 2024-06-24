@@ -20,14 +20,13 @@ export default async function saveImage({
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(data)
     const { uploads } = data;
 
     let returnUrl: string = "";
 
     await Promise.all(
       uploads.map(async (upload: any) => {
-        const { url, key } = upload;
+        let { url, key } = upload;
         returnUrl = url;
         await axios.post(
           getUrl("/admin/blog/images"),
@@ -45,7 +44,6 @@ export default async function saveImage({
         );
       })
     );
-    console.log(returnUrl)
     return { ok: true, url: returnUrl };
   } catch (e) {
     console.error(e);
