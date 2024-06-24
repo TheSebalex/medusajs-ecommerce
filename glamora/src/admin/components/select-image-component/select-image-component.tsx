@@ -1,7 +1,7 @@
 import React from "react";
 import { Drawer, Button, toast, Toaster } from "@medusajs/ui";
 import { Trash } from "@medusajs/icons";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import deleteImage from "../../utils/delete-image";
 import saveImage from "../../utils/save-image";
 import getImages from "../../utils/get-images";
@@ -9,15 +9,21 @@ import getImages from "../../utils/get-images";
 export default function SelectImageComponent({
   images,
   resolve,
-  title
+  title,
 }: {
   images: any[];
   resolve: Function;
-  title: string
+  title: string;
 }) {
   const [displayImages, setDisplayImages] = useState(images);
+  const selectedRef = useRef(null);
 
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    selectedRef.current = selected;
+  }, [selected]);
+
   const [show, setShow] = useState(true);
   return (
     <>
@@ -53,7 +59,7 @@ export default function SelectImageComponent({
                       src={img.url}
                       onClick={() => setSelected(i)}
                       className={`${
-                        selected === i ? "border-[green]" : "border-transparent"
+                        selectedRef.current === i ? "border-[green]" : "border-transparent"
                       } cursor-pointer border-2 w-full aspect-square rounded-lg shadow object-cover`}
                     />
                     <div
@@ -84,7 +90,8 @@ export default function SelectImageComponent({
             <Button
               onClick={() => {
                 setShow(false);
-                if(selected ?? false) setTimeout(() => resolve(displayImages[selected]), 10);
+                if (selected ?? false)
+                  setTimeout(() => resolve(displayImages[selected]), 10);
               }}
             >
               Save
