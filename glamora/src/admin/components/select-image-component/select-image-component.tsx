@@ -1,3 +1,4 @@
+import React from "react";
 import { Drawer, Button, toast, Toaster } from "@medusajs/ui";
 import { Trash } from "@medusajs/icons";
 import { useState } from "react";
