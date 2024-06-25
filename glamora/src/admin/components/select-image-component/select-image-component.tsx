@@ -75,11 +75,11 @@ export default function SelectImageComponent({
           </Drawer.Body>
           <Drawer.Footer>
             <Button
+              variant="secondary"
               onClick={() => {
                 setShow(false);
                 setTimeout(() => resolve(null), 10);
               }}
-              variant="secondary"
             >
               Cancel
             </Button>
