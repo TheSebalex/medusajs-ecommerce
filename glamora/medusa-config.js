@@ -40,6 +40,7 @@ const plugins = [
     resolve: `@medusajs/file-local`,
     options: {
       upload_dir: "uploads",
+      backend_url: process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000' 
     },
   },
   {
@@ -64,7 +65,7 @@ const plugins = [
 ];
 
 const modules = {
-  /*eventBus: {
+  eventBus: {
     resolve: "@medusajs/event-bus-redis",
     options: {
       redisUrl: REDIS_URL
@@ -75,7 +76,7 @@ const modules = {
     options: {
       redisUrl: REDIS_URL
     }
-  },*/
+  },
   // blogService: {
   //   resolve: "./modules/medusa-blog-ecommerce/index.ts",
   // }
