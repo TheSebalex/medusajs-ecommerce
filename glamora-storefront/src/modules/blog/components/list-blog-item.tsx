@@ -43,6 +43,7 @@ export default function ListBlogItem({
                 <Image
                   src={image}
                   alt={`${title} thumbnail`}
+                  fill
                   className="absolute rounded-t-lg top-0 left-0 bottom-0 right-0 object-cover w-full h-[200px]"
                 />
               </div>

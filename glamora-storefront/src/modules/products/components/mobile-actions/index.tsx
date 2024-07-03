@@ -102,8 +102,8 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                 <div></div>
               )}
             </div>
-            <div className="grid grid-cols-2 w-full gap-x-4">
-              <Button
+            <div className={(product.variants.length > 1 ? "grid grid-cols-2 " : "") + "w-full gap-x-4"}>
+              {product.variants.length > 1 && <Button
                 onClick={open}
                 variant="secondary"
                 className="w-full"
@@ -117,7 +117,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
                   </span>
                   <ChevronDown />
                 </div>
-              </Button>
+              </Button>}
               <Button
                 onClick={handleAddToCart}
                 disabled={!inStock || !variant}

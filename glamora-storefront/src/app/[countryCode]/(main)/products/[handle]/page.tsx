@@ -51,8 +51,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     (product) => product
   )
 
-  console.log(product)
-
   if (!product) {
     notFound()
   }

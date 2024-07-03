@@ -26,9 +26,7 @@ const Hero = () => {
             />
           </div>
           <Text className="text-2xl leading-10 md:text-left font-normal text-white mb-5">
-            Step into Home Wizardry Store, where your home comes alive! Discover
-            gadgets that simplify life. Upgrade to a smarter home today and live
-            the future!
+            Step into Home Wizardry Store, where your home comes alive! Discover gadgets that simplify life. Upgrade to a smarter home today and live the future!
           </Text>
           <LocalizedClientLink
             href="/store"

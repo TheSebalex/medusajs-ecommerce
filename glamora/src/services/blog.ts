@@ -1,4 +1,4 @@
-import { TransactionBaseService } from "@medusajs/medusa";
+import { TransactionBaseService, CustomerGroupService } from "@medusajs/medusa";
 import { Lifetime } from "awilix";
 import { EntityManager } from "typeorm";
 import { generateEntityId } from "@medusajs/medusa/dist/utils";
