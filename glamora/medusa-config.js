@@ -60,6 +60,7 @@ const plugins = [
       clientId: process.env.PAYPAL_CLIENT_ID,
       clientSecret: process.env.PAYPAL_CLIENT_SECRET,
       authWebhookId: process.env.PAYPAL_AUTH_WEBHOOK_ID,
+      capture: true,
     },
   },
 ];
@@ -76,10 +77,7 @@ const modules = {
     options: {
       redisUrl: REDIS_URL
     }
-  },
-  // blogService: {
-  //   resolve: "./modules/medusa-blog-ecommerce/index.ts",
-  // }
+  }
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
